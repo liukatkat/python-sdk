@@ -41,6 +41,9 @@ def configure_logging(
     logger = logging.getLogger("mcp")
     logger.setLevel(level)
     logger.propagate = False
+
+    for handler in handlers:
+        logger.removeHandler(handler)
     
     for handler in handlers:
         handler.setFormatter(formatter)
