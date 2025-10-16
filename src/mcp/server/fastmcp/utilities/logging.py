@@ -36,8 +36,14 @@ def configure_logging(
     if not handlers:
         handlers.append(logging.StreamHandler())
 
-    logging.basicConfig(
-        level=level,
-        format="%(message)s",
-        handlers=handlers,
-    )
+    formatter = logging.Formatter("%(message)s")
+
+    logger = logging.getLogger("mcp")
+    logger.setLevel(level)
+    logger.propagate = False
+    
+    for handler in handlers:
+        handler.setFormatter(formatter)
+        logger.addHandler(handler)
+
+    logger.info("Logging configured")
